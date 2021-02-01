@@ -1,0 +1,800 @@
+openapi: 3.0.3
+info:
+  title: Party Management API
+  version: .0.0
+  description: >-
+    Party Management API provides RESTFUL operations to manage Party entity. <br/>
+    Party can be an Individual or an Organization that has any kind of relation with the
+    enterprise.
+
+    ### Resources
+
+    - Individual
+
+    - Organization
+
+
+    ### tm forum API Reference : <a href="https://projects.tmforum.org/wiki/display/API/Open+API+Table" > TMF 632 - Party Management API </a>
+  contact:
+    name: Kapil Gidwani
+    email: kgidwani@protonmail.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: 'https://serverRoot/tmf-api/party/v4/'
+tags:
+  - name: Individual
+paths:
+  /individual:
+    post:
+      tags:
+        - Individual
+      summary: Creates a Individual
+      description: This operation creates a Individual entity.
+      operationId: createIndividual
+      requestBody:
+        description: The Individual to be created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateIndividualResource'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Individual'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Problem'
+      x-codegen-request-body-name: individual
+
+components:
+  schemas:
+    CreateIndividualResource:
+      required:
+        - givenName
+        - familyName
+      type: object
+      description: >-
+        Individual represents a single human being (a man, woman or child). The
+        individual can be a customer, an employee or any other person that the
+        organization needs to store information about.
+
+        Skipped properties: id,href
+      properties:
+        title:
+          type: string
+          description: 'Useful for titles (aristocratic, social,...) Baron, Pr, Dr, Sir, ...'
+        givenName:
+          type: string
+          description: First name of the individual
+        middleName:
+          type: string
+          description: Middles name or initial
+        familyName:
+          type: string
+          description: >-
+            Contains the non-chosen or inherited name. Also known as last name
+            in the Western context
+        familyNamePrefix:
+          type: string
+          description: Family name prefix
+        status:
+          $ref: '#/components/schemas/IndividualStateType'
+        birthDate:
+          type: string
+          description: Birth date
+          format: date-time
+        countryOfBirth:
+          type: string
+          description: Country where the individual was born
+        deathDate:
+          type: string
+          description: Date of death
+          format: date-time
+        formattedName:
+          type: string
+          description: >-
+            A fully formatted name in one string with all of its pieces in their
+            proper place and all of the necessary punctuation. Useful for
+            specific contexts (Chinese, Japanese, Korean,…)
+        gender:
+          type: string
+          description: Gender
+        legalName:
+          type: string
+          description: Legal name or birth name (name one has for official purposes)
+        maritalStatus:
+          type: string
+          description: 'Marital status (married, divorced, widow ...)'
+        nationality:
+          type: string
+          description: Nationality
+        placeOfBirth:
+          type: string
+          description: Reference to the place where the individual was born
+        preferredGivenName:
+          type: string
+          description: >-
+            Contains the chosen name by which the individual prefers to be
+            addressed. Note: This name may be a name other than a given name,
+            such as a nickname
+        contactMedium:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMedium'
+        creditRating:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartyCreditProfile'
+        disability:
+          type: array
+          items:
+            $ref: '#/components/schemas/Disability'
+        externalReference:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        individualIdentification:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndividualIdentification'
+        languageAbility:
+          type: array
+          items:
+            $ref: '#/components/schemas/LanguageAbility'
+        otherName:
+          type: array
+          items:
+            $ref: '#/components/schemas/OtherNameIndividual'
+        partyCharacteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        relatedParty:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+    Individual:
+      required:
+        - id
+      type: object
+      description: >-
+        Individual represents a single human being (a man, woman or child). The
+        individual can be a customer, an employee or any other person that the
+        organization needs to store information about.
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the Individual
+        href:
+          type: string
+          description: Hyperlink to access the Individual
+        title:
+          type: string
+          description: 'Useful for titles (aristocratic, social,...) Pr, Dr, Sir, ...'
+        givenName:
+          type: string
+          description: First name of the individual
+        middleName:
+          type: string
+          description: Middles name or initial
+        familyName:
+          type: string
+          description: >-
+            Contains the non-chosen or inherited name. Also known as last name
+            in the Western context
+        familyNamePrefix:
+          type: string
+          description: Family name prefix
+        status:
+          $ref: '#/components/schemas/IndividualStateType'
+        birthDate:
+          type: string
+          description: Birth date
+          format: date-time
+        countryOfBirth:
+          type: string
+          description: Country where the individual was born
+        deathDate:
+          type: string
+          description: Date of death
+          format: date-time
+        formattedName:
+          type: string
+          description: >-
+            A fully formatted name in one string with all of its pieces in their
+            proper place and all of the necessary punctuation. Useful for
+            specific contexts (Chinese, Japanese, Korean,…)
+        gender:
+          type: string
+          description: Gender
+        legalName:
+          type: string
+          description: Legal name or birth name (name one has for official purposes)
+        maritalStatus:
+          type: string
+          description: 'Marital status (married, divorced, widow ...)'
+        nationality:
+          type: string
+          description: Nationality
+        placeOfBirth:
+          type: string
+          description: Reference to the place where the individual was born
+        preferredGivenName:
+          type: string
+          description: >-
+            Contains the chosen name by which the individual prefers to be
+            addressed. Note: This name may be a name other than a given name,
+            such as a nickname
+        contactMedium:
+          type: array
+          items:
+            $ref: '#/components/schemas/ContactMedium'
+        creditRating:
+          type: array
+          items:
+            $ref: '#/components/schemas/PartyCreditProfile'
+        disability:
+          type: array
+          items:
+            $ref: '#/components/schemas/Disability'
+        externalReference:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExternalReference'
+        individualIdentification:
+          type: array
+          items:
+            $ref: '#/components/schemas/IndividualIdentification'
+        languageAbility:
+          type: array
+          items:
+            $ref: '#/components/schemas/LanguageAbility'
+        otherName:
+          type: array
+          items:
+            $ref: '#/components/schemas/OtherNameIndividual'
+        partyCharacteristic:
+          type: array
+          items:
+            $ref: '#/components/schemas/Characteristic'
+        relatedParty:
+          type: array
+          items:
+            $ref: '#/components/schemas/RelatedParty'
+
+    PartyCreditProfile:
+      type: object
+      properties:
+        creditAgencyName:
+          type: string
+          description: Name of the credit agency giving the score
+        creditAgencyType:
+          type: string
+          description: Type of the credit agency giving the score
+        ratingReference:
+          type: string
+          description: Reference corresponding to the credit rating
+        ratingScore:
+          type: integer
+          description: >-
+            A measure of a party’s creditworthiness calculated on the basis of a
+            combination of factors such as their income and credit history
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          type: string
+          description: 'When sub-classing, this defines the super-class'
+        '@schemaLocation':
+          type: string
+          description: >-
+            A URI to a JSON-Schema file that defines additional attributes and
+            relationships
+          format: uri
+        '@type':
+          type: string
+          description: 'When sub-classing, this defines the sub-class entity name'
+      description: >-
+        An individual might be evaluated for its worthiness and this evaluation
+        might be based on a credit rating given by a credit agency.
+    Disability:
+      type: object
+      properties:
+        disabilityCode:
+          type: string
+          description: Code of the disability
+        disabilityName:
+          type: string
+          description: Name of the disability
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          type: string
+          description: 'When sub-classing, this defines the super-class'
+        '@schemaLocation':
+          type: string
+          description: >-
+            A URI to a JSON-Schema file that defines additional attributes and
+            relationships
+          format: uri
+        '@type':
+          type: string
+          description: 'When sub-classing, this defines the sub-class entity name'
+      description: Lack or inadequate strength or ability.
+    ExternalReference:
+      type: object
+      properties:
+        externalReferenceType:
+          type: string
+          description: Type of the external reference
+        name:
+          type: string
+          description: External reference name
+        '@baseType':
+          type: string
+          description: 'When sub-classing, this defines the super-class'
+        '@schemaLocation':
+          type: string
+          description: >-
+            A URI to a JSON-Schema file that defines additional attributes and
+            relationships
+          format: uri
+        '@type':
+          type: string
+          description: 'When sub-classing, this defines the sub-class entity name'
+      description: External reference of the individual or reference in other system
+    OtherNameIndividual:
+      type: object
+      properties:
+        aristocraticTitle:
+          type: string
+          description: 'e.g. Baron, Graf, Earl,…'
+        familyName:
+          type: string
+          description: >-
+            Contains the non-chosen or inherited name. Also known as last name
+            in the Western context
+        familyNamePrefix:
+          type: string
+          description: Family name prefix
+        formattedName:
+          type: string
+          description: >-
+            . A fully formatted name in one string with all of its pieces in
+            their proper place and all of the necessary punctuation. Useful for
+            specific contexts (Chinese, Japanese, Korean,…)
+        fullName:
+          type: string
+          description: 'Full name flatten (first, middle, and last names)'
+        generation:
+          type: string
+          description: 'e.g. Sr, Jr…'
+        givenName:
+          type: string
+          description: First name
+        legalName:
+          type: string
+          description: Legal name or birth name (name one has for official purposes)
+        middleName:
+          type: string
+          description: Middle name or initial
+        preferredGivenName:
+          type: string
+          description: >-
+            Contains the chosen name by which the person prefers to be
+            addressed. Note: This name may be a name other than a given name,
+            such as a nickname
+        title:
+          type: string
+          description: 'Use for titles (aristrocatic, social, ...): Pr, Dr, Sir,....'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          type: string
+          description: 'When sub-classing, this defines the super-class'
+        '@schemaLocation':
+          type: string
+          description: >-
+            A URI to a JSON-Schema file that defines additional attributes and
+            relationships
+          format: uri
+        '@type':
+          type: string
+          description: 'When sub-classing, this defines the sub-class entity name'
+      description: >-
+        Keeps track of other names, for example the old name of a woman before
+        marriage or an artist name.
+    AttachmentRefOrValue:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for this particular attachment
+        href:
+          type: string
+          description: URI for this Attachment
+        attachmentType:
+          type: string
+          description: 'Attachment type such as video, picture'
+        content:
+          type: string
+          description: >-
+            The actual contents of the attachment object, if embedded, encoded
+            as base64
+        description:
+          type: string
+          description: A narrative text describing the content of the attachment
+        mimeType:
+          type: string
+          description: >-
+            Attachment mime type such as extension file for video, picture and
+            document
+        name:
+          type: string
+          description: The name of the attachment
+        url:
+          type: string
+          description: 'Uniform Resource Locator, is a web page address (a subset of URI)'
+        size:
+          $ref: '#/components/schemas/Quantity'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          type: string
+          description: 'When sub-classing, this defines the super-class'
+        '@schemaLocation':
+          type: string
+          description: >-
+            A URI to a JSON-Schema file that defines additional attributes and
+            relationships
+          format: uri
+        '@type':
+          type: string
+          description: 'When sub-classing, this defines the sub-class entity name'
+        '@referredType':
+          type: string
+          description: >-
+            The actual type of the target instance when needed for
+            disambiguation.
+      description: >-
+        An attachment by value or by reference. An attachment complements the
+        description of an element, for example through a document, a video, a
+        picture.
+    Quantity:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: Numeric value in a given unit
+          format: float
+          default: 1
+        units:
+          type: string
+          description: Unit
+      description: An amount in a given unit
+    Any:
+      type: object
+    RelatedParty:
+      required:
+        - '@referredType'
+        - id
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of a related entity.
+        href:
+          type: string
+          description: Reference of the related entity.
+        name:
+          type: string
+          description: Name of the related entity.
+        role:
+          type: string
+          description: Role played by the related party
+        '@baseType':
+          type: string
+          description: 'When sub-classing, this defines the super-class'
+        '@schemaLocation':
+          type: string
+          description: >-
+            A URI to a JSON-Schema file that defines additional attributes and
+            relationships
+          format: uri
+        '@type':
+          type: string
+          description: 'When sub-classing, this defines the sub-class entity name'
+        '@referredType':
+          type: string
+          description: >-
+            The actual type of the target instance when needed for
+            disambiguation.
+      description: >-
+        Related Entity reference. A related party defines party or party role
+        linked to a specific entity.
+    TaxDefinition:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the tax.
+        name:
+          type: string
+          description: Tax name.
+        taxType:
+          type: string
+          description: Type of  the tax.
+        '@baseType':
+          type: string
+          description: 'When sub-classing, this defines the super-class'
+        '@schemaLocation':
+          type: string
+          description: >-
+            A URI to a JSON-Schema file that defines additional attributes and
+            relationships
+          format: uri
+        '@type':
+          type: string
+          description: 'When sub-classing, this defines the sub-class entity name'
+        '@referredType':
+          type: string
+          description: >-
+            The actual type of the target instance when needed for
+            disambiguation.
+      description: >-
+        Reference of a tax definition. A tax is levied by an authorized tax
+        jurisdiction. There are many different types of tax (Federal Tax levied
+        by the US Government, State Tax levied by the State of California,…).
+    TimePeriod:
+      type: object
+      properties:
+        endDateTime:
+          type: string
+          description: 'End of the time period, using IETC-RFC-3339 format'
+          format: date-time
+        startDateTime:
+          type: string
+          description: >-
+            Start of the time period, using IETC-RFC-3339 format. If you define
+            a start, you must also define an end
+          format: date-time
+      description: >-
+        A period of time, either as a deadline (endDateTime only) a
+        startDateTime only, or both
+    Characteristic:
+      required:
+        - name
+        - value
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the characteristic
+        valueType:
+          type: string
+          description: Data type of the value of the characteristic
+        value:
+          $ref: '#/components/schemas/Any'
+        '@baseType':
+          type: string
+          description: 'When sub-classing, this defines the super-class'
+        '@schemaLocation':
+          type: string
+          description: >-
+            A URI to a JSON-Schema file that defines additional attributes and
+            relationships
+          format: uri
+        '@type':
+          type: string
+          description: 'When sub-classing, this defines the sub-class entity name'
+      description: >-
+        Describes a given characteristic of an object or entity through a
+        name/value pair.
+    IndividualIdentification:
+      type: object
+      properties:
+        identificationId:
+          type: string
+          description: Identifier
+        identificationType:
+          type: string
+          description: >-
+            Identification type (passport, national identity card, drivers
+            license, social security number, birth certificate)
+        issuingAuthority:
+          type: string
+          description: >-
+            Authority which has issued the identifier, such as: social security,
+            town hall
+        issuingDate:
+          type: string
+          description: Date at which the identifier was issued
+          format: date-time
+        attachment:
+          $ref: '#/components/schemas/AttachmentRefOrValue'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+        '@baseType':
+          type: string
+          description: 'When sub-classing, this defines the super-class'
+        '@schemaLocation':
+          type: string
+          description: >-
+            A URI to a JSON-Schema file that defines additional attributes and
+            relationships
+          format: uri
+        '@type':
+          type: string
+          description: 'When sub-classing, this defines the sub-class entity name'
+      description: >-
+        Represents our registration of information used as proof of identity by
+        an individual (passport, national identity card, drivers license, social
+        security number, birth certificate)
+    IndividualStateType:
+      type: string
+      description: Valid values for the lifecycle state of the individual
+      enum:
+        - initialized
+        - validated
+        - deceaded
+    LanguageAbility:
+      type: object
+      description: Ability of an individual to understand or converse in a language.
+      properties:
+        isFavouriteLanguage:
+          type: boolean
+          description: >-
+            A “true” value specifies whether the language is considered by the
+            individual as his favourite one
+        languageCode:
+          type: string
+          description: Language code (RFC 5646)
+        languageName:
+          type: string
+          description: Language name
+        listeningProficiency:
+          type: string
+          description: Listening proficiency evaluated for this language
+        readingProficiency:
+          type: string
+          description: Reading proficiency evaluated for this language
+        speakingProficiency:
+          type: string
+          description: Speaking proficiency evaluated for this language
+        writingProficiency:
+          type: string
+          description: Writing proficiency evaluated for this language
+
+    ContactMedium:
+      type: object
+      description: Indicates the contact medium that could be used to contact the party.
+      properties:
+        mediumType:
+          type: string
+          description: >-
+            Type of the contact medium, such as: email address, telephone
+            number, postal address
+          example: email
+        preferred:
+          type: boolean
+          description: 'If true, indicates that is the preferred contact medium'
+        characteristic:
+          $ref: '#/components/schemas/MediumCharacteristic'
+        validFor:
+          $ref: '#/components/schemas/TimePeriod'
+
+
+    MediumCharacteristic:
+      type: object
+      description: >-
+        Describes the contact medium characteristics that could be used to
+        contact a party (an individual or an organization)
+      properties:
+        contactType:
+          type: string
+          description: >-
+            The type of contact, for example: phone number such as mobile, fixed
+            home, fixed office. postal address such as shipping instalation…
+        emailAddress:
+          type: string
+          description: Full email address in standard format
+        faxNumber:
+          type: string
+          description: The fax number of the contact
+        phoneNumber:
+          type: string
+          description: The primary phone number of the contact
+        postCode:
+          type: string
+          description: Postcode
+        city:
+          type: string
+          description: The city
+        stateOrProvince:
+          type: string
+          description: State or province
+        street1:
+          type: string
+          description: Describes the street
+        street2:
+          type: string
+          description: Complementary street description
+        country:
+          type: string
+          description: The country
+        socialNetworkId:
+          type: string
+          description: Identifier as a member of a social network
+
+    Problem:
+      type: object
+      properties:
+        type:
+          type: string
+          format: uri
+          description: |
+            An absolute URI that identifies the problem type.  When dereferenced,
+            it SHOULD provide human-readable documentation for the problem type
+            (e.g., using HTML).
+          default: 'about:blank'
+          example: 'https://zalando.github.io/problem/constraint-violation'
+        title:
+          type: string
+          description: |
+            A short, summary of the problem type. Written in english and readable
+            for engineers (usually not suited for non technical stakeholders and
+            not localized); example: Service Unavailable
+        status:
+          type: integer
+          format: int32
+          description: |
+            The HTTP status code generated by the origin server for this occurrence
+            of the problem.
+          minimum: 100
+          maximum: 600
+          exclusiveMaximum: true
+          example: 503
+        detail:
+          type: string
+          description: |
+            A human readable explanation specific to this occurrence of the
+            problem.
+          example: Connection to database timed out
+        instance:
+          type: string
+          format: uri
+          description: |
+            An absolute URI that identifies the specific occurrence of the problem.
+            It may or may not yield further information if dereferenced.
