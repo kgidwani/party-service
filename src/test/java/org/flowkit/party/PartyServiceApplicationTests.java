@@ -10,4 +10,8 @@ class PartyServiceApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	public void main() {
+		PartyServiceApplication.main(new String[] {});
+	}
 }
