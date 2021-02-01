@@ -1,0 +1,1 @@
+package org.flowkit.party.domain.model;
