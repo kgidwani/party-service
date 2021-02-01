@@ -4,7 +4,7 @@ import lombok.Value;
 
 @Value
 public class Version {
-    int version;
+    Integer version;
 
     public static Version initialVersion() {
         return new Version(1);

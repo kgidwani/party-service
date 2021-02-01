@@ -4,6 +4,7 @@ package org.flowkit.party.domain.model.commands;
 import lombok.Getter;
 import org.flowkit.party.domain.model.aggregates.Individual;
 
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
@@ -19,5 +20,11 @@ public class CreateIndividualCommandResult {
         this.result = Result.Success;
         this.createdIndividual = createdIndividual;
         this.failureReasons = Collections.emptyList();
+    }
+
+    public CreateIndividualCommandResult(@NotEmpty List<String> failureReasons) {
+        this.result = Result.Rejection;
+        this.failureReasons = failureReasons;
+        this.createdIndividual = null;
     }
 }
