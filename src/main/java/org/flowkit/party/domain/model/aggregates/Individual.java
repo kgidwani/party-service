@@ -7,6 +7,7 @@ import org.flowkit.party.domain.model.commands.CreateIndividualCommand;
 import org.flowkit.party.domain.model.valueobjects.Version;
 import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.types.Identifier;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 import javax.validation.Valid;
@@ -15,9 +16,9 @@ import java.util.UUID;
 
 @Getter
 @AggregateRoot
-class Individual extends AbstractAggregateRoot<Individual> {
+public class Individual extends AbstractAggregateRoot<Individual> {
 
-    private static final int INITTIAL_VERSION = 1;
+    @Id
     private IndividualId individualId;
     private Version version;
 
@@ -39,6 +40,7 @@ class Individual extends AbstractAggregateRoot<Individual> {
 
         public static IndividualId create() {
             return IndividualId.of(UUID.randomUUID());
+            // TODO Create UUID Generator
         }
     }
 }
