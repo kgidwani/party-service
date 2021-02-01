@@ -9,6 +9,7 @@ import org.jmolecules.ddd.annotation.AggregateRoot;
 import org.jmolecules.ddd.types.Identifier;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.AbstractAggregateRoot;
+import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
@@ -16,6 +17,7 @@ import java.util.UUID;
 
 @Getter
 @AggregateRoot
+@Validated
 public class Individual extends AbstractAggregateRoot<Individual> {
 
     @Id
